@@ -1,0 +1,286 @@
+PostgreSQL
+
+C:\Program....\9.4
+super-user/delphix
+5432
+
+#
+# Create Demo User Account ...
+#
+$dbuser = "postgres";
+$dbpass = "delphix";
+$dbport = 5432;
+
+#CREATE ROLE delphix SUPERUSER LOGIN REPLICATION [ PASSWORD 'password'];
+CREATE ROLE delphix SUPERUSER LOGIN REPLICATION PASSWORD 'delphix';
+
+#
+# Application Requires Network Access, must update postgresql.conf and pg_hba.conf configuration files
+#
+
+#
+# Update postgresql.conf file ...
+#
+postgresql.conf
+
+#max_wal_senders Configuration
+#The default value of max_wal_senders is zero, meaning replication is disabled. In this configuration, the value of max_wal_senders must be increased to two for the Delphix Engine:
+#max_wal_senders = 4       # Default is 0
+
+#wal_level Configuration
+#The default value of wal_level is minimal, which writes only the information needed to recover from a crash or immediate shutdown to the WAL archives. In this configuration, one must add the logging required for WAL archiving as follows:
+#wal_level = archive       # Default is minimal
+
+# ----------------------
+# Customized Options ...
+# ----------------------
+listen_addresses = '*'
+wal_level = archive
+max_wal_senders = 4
+
+
+
+#
+# Update pg_hba.conf file ...
+#
+pg_hba.conf Configuration
+#host    all            <role>    	<ip-address>/32    	<auth-method>
+#host    replication    <role>    	<ip-address>/32    	<auth-method>
+host	all		all		<app_ip_address>/32	md5
+host    replication	all		<app_ip_address>/32     trust
+
+
+
+--
+-- PostgreSQL ...
+--
+
+-- DROP DATABASE delphixdb;
+CREATE DATABASE delphixdb
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'English_United States.1252'
+       LC_CTYPE = 'English_United States.1252'
+       CONNECTION LIMIT = -1;
+
+	   
+-- DROP SCHEMA delphixdb;
+CREATE SCHEMA delphixdb AUTHORIZATION postgres;
+
+
+--
+-- Public Schema
+--
+CREATE TABLE "EMPLOYEES"
+(
+  "FIRST_NAME" character varying(50),
+  "LAST_NAME" character varying(50),
+  "DEPT_NAME" character varying(50),
+  "CITY" character varying(50)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "EMPLOYEES" OWNER TO postgres;
+
+
+Insert into "EMPLOYEES" values ('Woody','Evans','Solution Architects','Hoboken');
+Insert into "EMPLOYEES" values ('Jeff','Zeisler','Solution Architects','Menlo Park');
+Insert into "EMPLOYEES" values ('Dr. Jeff','Wootton','Lyrical Rap Studies','Reston');
+Insert into "EMPLOYEES" values ('Dino','Konstantinos','Sales','Fantasyland');
+Insert into "EMPLOYEES" values ('Ted','Girard','Sales','Bethesda');
+Insert into "EMPLOYEES" values ('Adam','Bowen','No Sleep Till','Brooklyn');
+Insert into "EMPLOYEES" values ('Adam','Bowen','Solution Architects','Ashland');
+Insert into "EMPLOYEES" values ('Luther','Vandross','Superstar','NYC');
+Insert into "EMPLOYEES" values ('Ted','Girard','Sales','Bethesda');
+Insert into "EMPLOYEES" values ('Jude','Seth','Solution Architects','DK');
+Insert into "EMPLOYEES" values ('Darth','Vader','Imperial Army','Death Star');
+
+select * from "EMPLOYEES";
+
+
+-- DROP TABLE "MEDICAL_RECORDS";
+CREATE TABLE "MEDICAL_RECORDS"
+(
+  "PATIENT_ID" integer NOT NULL,
+  "PHONE_NUMBER" character varying(30),
+  "MEDICAL_RECORD_NUMBER" character varying(30),
+  "EMAIL" character varying(40),
+  "ADDRESS" character varying(60)
+  , CONSTRAINT medical_records_pkey PRIMARY KEY ("PATIENT_ID")
+) 
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "MEDICAL_RECORDS" OWNER TO postgres;
+
+
+Insert into "MEDICAL_RECORDS" values (1,'803-345-6789','4483838','raygun@aol.com','40 Presidential Dr');
+Insert into "MEDICAL_RECORDS" values (2,'415-345-6789','5483838','bush@aol.com','2943 SMU Blvd');
+Insert into "MEDICAL_RECORDS" values (3,'650-456-0987','6483838','obama@aol.com','1600 Pennsylvania Ave');
+Insert into "MEDICAL_RECORDS" values (4,'123-321-9990','7483838','abe@hotmail.com','112 N 6th St');
+Insert into "MEDICAL_RECORDS" values (5,'440-345-2345','8483838','Jeff@whitehouse.gov','7415 Arlington Blvd');
+
+select * from "MEDICAL_RECORDS";
+
+
+-- DROP TABLE "PATIENT";
+CREATE TABLE "PATIENT" (
+	"PATIENT_ID" integer NOT NULL, 
+	"FIRSTNAME" character varying(40), 
+	"LASTNAME" character varying(40), 
+	"SOCIAL_SECURITY_NUMBER" character varying(11), 
+	"ADDRESS" character varying(60), 
+	"CITY" character varying(15), 
+	"ZIPCODE" character varying(10), 
+	"DOB" DATE, 
+	"PHONE_NUMBER" character varying(24), 
+	"EMAIL" character varying(40)
+    , CONSTRAINT patient_pkey PRIMARY KEY ("PATIENT_ID")
+)
+ WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "PATIENT" OWNER TO postgres;
+
+
+Insert into "PATIENT" values (1,'Ronald','Reagan','474-78-1234','40 Presidential Dr','Simi Valley','93065-0987',null,'803-345-6789','raygun@aol.com');
+Insert into "PATIENT" values (2,'George','Bush','111-67-4321','2943 SMU Blvd','Dallas','75205-7367',null,'415-345-6789','bush@aol.com');
+Insert into "PATIENT" values (3,'Barack','Obama','650-12-5432','1600 Pennsylvania Ave','Washington DC','20500-6353',null,'650-456-0987','obama@aol.com');
+Insert into "PATIENT" values (4,'Abraham','Lincoln','673-11-3479','112 N 6th St','Springfield','62701-6363',null,'123-321-9990','abe@hotmail.com');
+Insert into "PATIENT" values (5,'Thomas','Jefferson','123-68-8765','7415 Arlington Blvd','Falls Church','22042-4242',null,'440-345-2345','Jeff@whitehouse.gov');
+
+select * from "PATIENT";
+
+-- DROP TABLE "PATIENT_DETAILS";
+CREATE TABLE "PATIENT_DETAILS" (
+	"PATIENT_ID" integer NOT NULL, 
+	"PHONE_NUMBER" character varying(30), 
+	"MEDICAL_RECORD_NUMBER" character varying(30), 
+	"ACCOUNT_NUMBER" character varying(30), 
+	"CC_NUMBER" character varying(30)
+    , CONSTRAINT patient_details_pkey PRIMARY KEY ("PATIENT_ID")
+) 
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "PATIENT_DETAILS" OWNER TO postgres;
+
+
+Insert into "PATIENT_DETAILS" values (1,'803-345-6789','3338383','4483838','4283897623459088');
+Insert into "PATIENT_DETAILS" values (2,'415-345-6789','7338383','5483838','5683897623459088');
+Insert into "PATIENT_DETAILS" values (3,'650-456-0987','8338383','6483838','3783897623459088');
+Insert into "PATIENT_DETAILS" values (4,'123-321-9990','2338383','7483838','4283897623459088');
+   
+select * from "PATIENT_DETAILS";
+   
+
+   
+-----------------------------------------------------------------------
+--
+-- delphixdb schema
+--
+
+-- DROP TABLE delphixdb."EMPLOYEES";
+CREATE TABLE delphixdb."EMPLOYEES"
+(
+  "FIRST_NAME" character varying(50),
+  "LAST_NAME" character varying(50),
+  "DEPT_NAME" character varying(50),
+  "CITY" character varying(50)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE delphixdb."EMPLOYEES" OWNER TO postgres;
+
+Insert into delphixdb."EMPLOYEES" values ('Woody','Evans','Solution Architects','Hoboken');
+Insert into delphixdb."EMPLOYEES" values ('Jeff','Zeisler','Solution Architects','Menlo Park');
+Insert into delphixdb."EMPLOYEES" values ('Dr. Jeff','Wootton','Lyrical Rap Studies','Reston');
+Insert into delphixdb."EMPLOYEES" values ('Dino','Konstantinos','Sales','Fantasyland');
+Insert into delphixdb."EMPLOYEES" values ('Ted','Girard','Sales','Bethesda');
+Insert into delphixdb."EMPLOYEES" values ('Adam','Bowen','No Sleep Till','Brooklyn');
+Insert into delphixdb."EMPLOYEES" values ('Adam','Bowen','Solution Architects','Ashland');
+Insert into delphixdb."EMPLOYEES" values ('Luther','Vandross','Superstar','NYC');
+Insert into delphixdb."EMPLOYEES" values ('Ted','Girard','Sales','Bethesda');
+Insert into delphixdb."EMPLOYEES" values ('Jude','Seth','Solution Architects','DK');
+Insert into delphixdb."EMPLOYEES" values ('Darth','Vader','Imperial Army','Death Star');
+
+select * from delphixdb."EMPLOYEES";
+
+-- DROP TABLE delphixdb."MEDICAL_RECORDS";
+CREATE TABLE delphixdb."MEDICAL_RECORDS"
+(
+  "PATIENT_ID" integer NOT NULL,
+  "PHONE_NUMBER" character varying(30),
+  "MEDICAL_RECORD_NUMBER" character varying(30),
+  "EMAIL" character varying(40),
+  "ADDRESS" character varying(60)
+  , CONSTRAINT medical_records_pkey PRIMARY KEY ("PATIENT_ID")
+) 
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE delphixdb."MEDICAL_RECORDS" OWNER TO postgres;
+
+
+Insert into delphixdb."MEDICAL_RECORDS" values (1,'803-345-6789','4483838','raygun@aol.com','40 Presidential Dr');
+Insert into delphixdb."MEDICAL_RECORDS" values (2,'415-345-6789','5483838','bush@aol.com','2943 SMU Blvd');
+Insert into delphixdb."MEDICAL_RECORDS" values (3,'650-456-0987','6483838','obama@aol.com','1600 Pennsylvania Ave');
+Insert into delphixdb."MEDICAL_RECORDS" values (4,'123-321-9990','7483838','abe@hotmail.com','112 N 6th St');
+Insert into delphixdb."MEDICAL_RECORDS" values (5,'440-345-2345','8483838','Jeff@whitehouse.gov','7415 Arlington Blvd');
+
+select * from delphixdb."MEDICAL_RECORDS";
+
+
+-- DROP TABLE delphixdb."PATIENT";
+CREATE TABLE delphixdb."PATIENT" (
+	"PATIENT_ID" integer NOT NULL, 
+	"FIRSTNAME" character varying(40), 
+	"LASTNAME" character varying(40), 
+	"SOCIAL_SECURITY_NUMBER" character varying(11), 
+	"ADDRESS" character varying(60), 
+	"CITY" character varying(15), 
+	"ZIPCODE" character varying(10), 
+	"DOB" DATE, 
+	"PHONE_NUMBER" character varying(24), 
+	"EMAIL" character varying(40)
+    , CONSTRAINT patient_pkey PRIMARY KEY ("PATIENT_ID")
+)
+ WITH (
+  OIDS=FALSE
+);
+ALTER TABLE delphixdb."PATIENT" OWNER TO postgres;
+
+
+Insert into delphixdb."PATIENT" values (1,'Ronald','Reagan','474-78-1234','40 Presidential Dr','Simi Valley','93065-0987',null,'803-345-6789','raygun@aol.com');
+Insert into delphixdb."PATIENT" values (2,'George','Bush','111-67-4321','2943 SMU Blvd','Dallas','75205-7367',null,'415-345-6789','bush@aol.com');
+Insert into delphixdb."PATIENT" values (3,'Barack','Obama','650-12-5432','1600 Pennsylvania Ave','Washington DC','20500-6353',null,'650-456-0987','obama@aol.com');
+Insert into delphixdb."PATIENT" values (4,'Abraham','Lincoln','673-11-3479','112 N 6th St','Springfield','62701-6363',null,'123-321-9990','abe@hotmail.com');
+Insert into delphixdb."PATIENT" values (5,'Thomas','Jefferson','123-68-8765','7415 Arlington Blvd','Falls Church','22042-4242',null,'440-345-2345','Jeff@whitehouse.gov');
+
+select * from delphixdb."PATIENT";
+
+-- DROP TABLE delphixdb."PATIENT_DETAILS";
+CREATE TABLE delphixdb."PATIENT_DETAILS" (
+	"PATIENT_ID" integer NOT NULL, 
+	"PHONE_NUMBER" character varying(30), 
+	"MEDICAL_RECORD_NUMBER" character varying(30), 
+	"ACCOUNT_NUMBER" character varying(30), 
+	"CC_NUMBER" character varying(30)
+    , CONSTRAINT patient_details_pkey PRIMARY KEY ("PATIENT_ID")
+) 
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE delphixdb."PATIENT_DETAILS" OWNER TO postgres;
+
+
+Insert into delphixdb."PATIENT_DETAILS" values (1,'803-345-6789','3338383','4483838','4283897623459088');
+Insert into delphixdb."PATIENT_DETAILS" values (2,'415-345-6789','7338383','5483838','5683897623459088');
+Insert into delphixdb."PATIENT_DETAILS" values (3,'650-456-0987','8338383','6483838','3783897623459088');
+Insert into delphixdb."PATIENT_DETAILS" values (4,'123-321-9990','2338383','7483838','4283897623459088');
+   
+select * from delphixdb."PATIENT_DETAILS";
+   
