@@ -17,7 +17,7 @@
 <%
 if ( noPages < 100 ) {
 %>
-  <select name=ipage style="width:60px;position:relative;top:0px;" onchange="document.form_sel.submit();">
+  <select name=ipage style="height:26px;line-height:26px;width:60px;position:relative;top:0px;" onchange="document.form_sel.submit();">
 <%
 for(int i = 1; i <= noPages; i+=1) {
  if (i == ipage) {
@@ -33,7 +33,7 @@ for(int i = 1; i <= noPages; i+=1) {
 
 } else {
 %>
-  <input type="text" name="ipage" value="<%=ipage%>" size="7" style="width:60px;position:relative;top:0px;" onchange="document.form_sel.submit();" />
+  <input type="text" name="ipage" value="<%=ipage%>" size="7" style="height:24px;line-height:24px;width:60px;font-size:9pt;position:relative;top:0px;" onchange="document.form_sel.submit();" />
 <%
 }
 %>
@@ -59,7 +59,7 @@ for(int i = 1; i <= noPages; i+=1) {
 <form name="form_icnt" method="POST">
 <td align=center style="font-size:9pt;width:180px;">
 Rows/Page: &nbsp;
-<select name=icnt style="width:60px;position:relative;top:0px;" onchange="document.form_icnt.submit();">
+<select name=icnt style="height:26px;line-height:26px;width:60px;position:relative;top:0px;" onchange="document.form_icnt.submit();">
 <%
 for (int i = 0; i < rows_per_page_arr.length; i++) {
 %>
@@ -82,9 +82,9 @@ if (icnt == rows_per_page_arr[i]) {
 
 <!-- Search Table -->
 <form name="form_find" method="POST">
-<td align=center style="font-size:9pt;width:180px;">
+<td align=center style="font-size:9pt;width:140px;">
 Search: 
-<input style="size:12px;line-height:12px;height:12px;" type="text" name="find_value" size="12" value="<%=isearch%>" />
+<input style="size:12px;line-height:12px;height:12px;" type="text" name="find_value" size="8" value="<%=isearch%>" />
 <image height="20" src="images/search_128.png" onclick="document.form_find.submit();" />
 </td>
 </form>

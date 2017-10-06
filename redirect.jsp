@@ -69,6 +69,7 @@ if (request.getParameter("login") != null) {
 String ds = "";
 String msg = "";
 String str = "";
+String vhgt = "";
 /*
 int arr[] = new int[8];
 arr[0] = 5;
@@ -162,14 +163,18 @@ if (dbType  != null) {
    }
 
    ////////////////////////////////////////////////////
-
    //
    // HTML Banner ...
    // 
+   if (dbType.equals("oracle")) {
+      vhgt="25";
+   } else {
+      vhgt="50";
+   }
    String ban = "<center><table border=0 style=\"background-color:black;width:100%;\">\n";
-   ban = ban + "<tr><td style=\"padding-left:100px;\" width=\"30%\" align=\"center\" valign=\"top\"><a href=\"redirect.jsp?sessionid="+sessionid+"&logout=yes\"><image src=\"img/logo.gif\" border=0 /></a></td>\n";
-   ban = ban + "<td align=\"center\" width=\"140\" valign=\"middle\"><image src=\"img/"+dbType+"_logo.png\" width=\"100\" border=0 /></td>\n";
-   ban = ban + "<td align=\"left\" valign=\"bottom\"><span style=\"padding-left:10px;font-size:14pt;\"><font color=\"#CC3300\">Delphix <font color=white><b>"+dataSource+"</b></font> Demo Application</font></span></td>\n";
+   ban = ban + "<tr><td style=\"padding-left:100px;\" width=\"30%\" align=\"center\" valign=\"top\"><a href=\"redirect.jsp?sessionid="+sessionid+"&logout=yes\"><image src=\"img/delphix-logo-white.png\" border=0 /></a></td>\n";
+   ban = ban + "<td align=\"center\" width=\"140\" valign=\"middle\"><image src=\"img/"+dbType+"_logo.png\" height=\""+vhgt+"\" border=0 /></td>\n";
+   ban = ban + "<td align=\"left\" valign=\"bottom\"><span style=\"padding-left:10px;font-size:14pt;\"><font color=\"#1AD6F5\">Delphix <font color=white><b>"+dataSource+"</b></font> Demo Application</font></span></td>\n";
    ban = ban + "</tr>\n";
    //if (msg != null) {
    //  ban = ban + "<tr style=\"background-color:white;width:100%;\"><td align=\"right\" style=\"color:blue;\"><i>:System Message:</i></td><td colspan=2>"+msg+"</td></tr>\n";
@@ -187,6 +192,19 @@ if (dbType  != null) {
    if ( dataSource != null) ds="jdbc/"+dataSource;
    else msg = msg+"<br /><font color=\"red\">Missing dataSource ...</font>";
    session.setAttribute("dataSource",ds);
+
+   //
+   // Page Title ...
+   // 
+   String[] arr = dataSource.replace("_"," ").split(" ");
+   StringBuffer sb = new StringBuffer();
+
+   for (int i = 0; i < arr.length; i++) {
+      sb.append(Character.toUpperCase(arr[i].charAt(0)))
+        .append(arr[i].substring(1)).append(" ");
+   }          
+   sb.toString().trim(); 
+   session.setAttribute("page_title",sb);
 
    //
    // Employee Page ...

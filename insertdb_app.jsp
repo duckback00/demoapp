@@ -18,7 +18,7 @@
 
         <sql:update var="newemp" dataSource="<%=session.getAttribute(\"dataSource\")%>">
 <%
-if ( session.getAttribute("employee_id").equals("YES") && session.getAttribute("dbType").equals("oracle") ) {
+if ( session.getAttribute("employee_id").equals("YES") ) {
    if (session.getAttribute("dbType").equals("mysql")) {
    %>
       insert into employees (employee_id,first_name,last_name,dept_name,city) VALUES ('${param.empid}','${param.firstname}','${param.lastname}','${param.deptname}','${param.city}')

@@ -120,9 +120,9 @@ try {
 
 <table border=0 style="background-color:black;width:100%;">
 <tr>
-<td width="33%" align="center" valign="top"><image src="img/logo.gif" /></td>
+<td width="33%" align="center" valign="top"><image src="img/delphix-logo-white.png" /></td>
 <td align="center">
-<span style="font-size:18pt;"><font color="#CC3300">Welcome to Delphix Demo Applications</font></span>
+<span style="font-size:18pt;"><font color="#1AD6F5">Welcome to Delphix Demo Applications</font></span>
 </td>
 </tr>
 </table>
@@ -168,6 +168,7 @@ try {
 </td>
 </tr>
 
+<!---
 <tr>
 <td height=80 align="center"><image src="img/postgres_logo.png" width=125></td>
 <td align="center">
@@ -177,7 +178,8 @@ try {
 <a href="redirect.jsp?dbType=postgresql&dataSource=postgresql_target&sqlSchema=delphixdb&sqlUpper=yes&sqlQuoted=yes">Target PostgreSQL Demo</a><br />
 </td>
 </tr>
-
+--->
+<!---
 <tr>
 <td height=80 align="center"><image src="img/mysql_logo.png" width=125></td>
 <td align="center">
@@ -189,6 +191,7 @@ try {
 <a href="redirect.jsp?dbType=mysql&dataSource=mysql_target"><font color=blue>(lower case)</font></a><br />
 </td>
 </tr>
+--->
 
 </table>
 </center>

@@ -99,7 +99,7 @@ if (session.getAttribute("dbType").equals("oracle")) {
         <link rel="stylesheet" type="text/css" href="style.css">
         --%>
         <link href="./bootstrap/css/bootstrap1.min.css" rel="stylesheet" media="screen"/>
-        <title>Prod Instance</title>
+        <title><%=session.getAttribute("page_title")%></title>
         <style type="text/css">
             body {
                 padding-top: 20px;
@@ -249,41 +249,42 @@ if (name.equals("EMPLOYEE_ID")) {
                         <c:forEach var="row" items="${employees.rows}">
                             <tr>
                                 <c:forEach var="columnName" items="${employees.columnNames}">
-                                   <c:set var="myTest" value="${columnName}"/>
-                                   <c:set var="myVal" value="${row[columnName]}"/>
+                                    <c:set var="myTest" value="${columnName}"/>
+                                    <c:set var="myVal" value="${row[columnName]}"/>
 
-                                   <%
-                                   String ztmp = "";
-                                   %>
-                                   <c:choose> 
-                                      <c:when test="${not empty myVal}">
-                                      <%
-                                      String strStr=pageContext.getAttribute("myTest").toString();
-                                      String strVal = pageContext.getAttribute("myVal").toString();
-                                      ztmp = strVal;
-                                      if (strStr.equals("CNT")) {
-                                         //out.println("yeah"+strVal+":");
-                                         itotal = Integer.parseInt(strVal);
-                                      }
-                                      if ( !strStr.equals("RNUM") && !strStr.equals("CNT") ) {
-                                         if (isearch != null && !isearch.equals("") ) {
-                                            if (ztmp != null) {
-                                               if (ztmp.toLowerCase().contains(isearch)) {
-                                                  ztmp = "<font color=red>"+ztmp+"</font>";
-                                               }
-                                            }
-                                         }
-                                         //${row[columnName]}
-                                         %>
-                                         <td><c:out value="<%=ztmp%>" escapeXml="false"/></td>
-                                         <%
-                                      }
-                                      %>
-                                      </c:when>
-                                      <c:otherwise>
-                                         <td><c:out value="<%=ztmp%>" escapeXml="false"/></td>
-                                      </c:otherwise>
-                                   </c:choose>
+                                    <%
+                                    String ztmp = "";
+                                    %>
+                                    <c:choose> 
+                                       <c:when test="${not empty myVal}">
+                                       <%
+                                       String strStr=pageContext.getAttribute("myTest").toString();
+                                       String strVal = pageContext.getAttribute("myVal").toString();
+                                       ztmp = strVal;
+                                       if (strStr.equals("CNT")) {
+                                          //out.println("yeah"+strVal+":");
+                                          itotal = Integer.parseInt(strVal);
+                                       }
+                                       if ( !strStr.equals("RNUM") && !strStr.equals("CNT") ) {
+                                          if (isearch != null && !isearch.equals("") ) {
+                                             if (ztmp != null) {
+                                                if (ztmp.toLowerCase().contains(isearch)) {
+                                                   ztmp = "<font color=red>"+ztmp+"</font>";
+                                                }
+                                             }
+                                          }
+                                          //${row[columnName]}
+                                          %>
+                                          <td><c:out value="<%=ztmp%>" escapeXml="false"/></td>
+                                          <%
+                                       }
+                                       %>
+                                       </c:when>
+                                       <c:otherwise>
+                                          <td><c:out value="<%=ztmp%>" escapeXml="false"/></td>
+                                       </c:otherwise>
+                                    </c:choose>
+
                                 </c:forEach>
                             </tr>
                         </c:forEach>
