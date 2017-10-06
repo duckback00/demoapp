@@ -1,0 +1,8 @@
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+protocol=http
+hostname=172.16.160.195
+portno=80
+username=delphix_admin
+password=delphix
+

@@ -1,0 +1,38 @@
+#
+# The MyProp.properties file can be configured to support http, https or both http/https along with multiple engines.
+#
+
+
+# 
+# http
+# 
+protocol=http
+hostname=172.16.160.195
+portno=80
+username=delphix_admin
+password=delphix
+
+
+#
+# https
+#
+protocol=https
+hostname=172.16.160.195
+portno=443
+username=delphix_admin
+password=delphix
+
+
+#
+# Both http and https multiple engine example too ... 
+#
+protocol=http,https
+hostname=172.16.160.195,172.16.160.195
+portno=80,443
+username=delphix_admin,delphix_admin
+password=delphix,delphix
+
+
+
+
+*** End of Document ***
