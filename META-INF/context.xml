@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- delphixdb/delphixdb for orcl db username on demokit -->
+<!-- scott/tiger for hrprod db on dlpx -->
+
+<Context antiJARLocking="true" path="/DataLoad">
+    <Resource name="jdbc/oracle_source" auth="Container"
+          type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+          url="jdbc:oracle:thin:@172.16.160.133:1521/orcl"
+          username="delphixdb" password="delphixdb" maxActive="20" maxIdle="10" validationQuery="select 1 from dual"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource sessionid="8a39ff85-92f8-4774-b928-b3cf6c078467" name="jdbc/oracle_target" auth="Container"
+           type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+           url="jdbc:oracle:thin:@172.16.160.133:1521/Vorcl"
+           username="delphixdb" password="delphixdb" maxActive="20" maxIdle="10" validationQuery="select 1 from dual"
+           testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/sybase_source" auth="Container"
+          type="javax.sql.DataSource" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+          url="jdbc:jtds:sybase://172.16.160.157:5000/delphixdb"
+          username="sa" password="delphix" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/sybase_target" auth="Container"
+          type="javax.sql.DataSource" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+          url="jdbc:jtds:sybase://172.16.160.147:5000/delphixdb"
+          username="sa" password="delphix" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/mssql_source" auth="Container"
+          type="javax.sql.DataSource" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+          url="jdbc:sqlserver://172.16.160.134:1433;DatabaseName=delphixdb"
+          username="sa" password="delphix" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/mssql_target" auth="Container"
+          type="javax.sql.DataSource" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+          url="jdbc:sqlserver://172.16.160.142:1433;DatabaseName=Vdelphix_demo"
+          username="sa" password="delphix" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/mysql_source" auth="Container"
+          type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
+          url="jdbc:mysql://172.16.160.133:3306/delphixdb?protocol=tcp"
+          username="delphixdb" password="delphixdb" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/mysql_target" auth="Container"
+          type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
+          url="jdbc:mysql://172.16.160.133:3308/delphixdb?protocol=tcp"
+          username="delphixdb" password="delphixdb" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/postgresql_source" auth="Container"
+          type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
+          url="jdbc:postgresql://172.16.160.155:5432/delphixdb"
+          username="postgres" password="delphix" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/postgresql_target" auth="Container"
+          type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
+          url="jdbc:postgresql://172.16.160.156:5433/delphixdb"
+          username="postgres" password="delphix" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+</Context>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- delphixdb/delphixdb for orcl db username on demokit -->
+<!-- scott/tiger for hrprod db on dlpx -->
+
+<Context antiJARLocking="true" path="/DataLoad">
+    <Resource name="jdbc/myoracle" auth="Container"
+          type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+          url="jdbc:oracle:thin:@172.16.160.157:1521/pdorcl"
+          username="delphixdb" password="delphixdb" maxActive="20" maxIdle="10" validationQuery="select 1 from dual"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/mysybase" auth="Container"
+          type="javax.sql.DataSource" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+          url="jdbc:jtds:sybase://172.16.160.147:5000/delphixdb"
+          username="sa" password="delphix" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/mssql" auth="Container"
+           type="javax.sql.DataSource" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+           url="jdbc:sqlserver://172.16.160.126:1433;DatabaseName=delphixdb"
+           username="sa" password="delphix" maxActive="20" maxIdle="10" validationQuery="select 1"
+           testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/mysql" auth="Container"
+          type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
+          url="jdbc:mysql://172.16.160.157:3306/delphixdb?protocol=tcp"
+          username="delphixdb" password="delphixdb" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+    <Resource name="jdbc/postgresql" auth="Container"
+          type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
+          url="jdbc:postgresql://172.16.160.126:5432/delphixdb"
+          username="postgres" password="delphix" maxActive="20" maxIdle="10" validationQuery="select 1"
+          testOnBorrow="true" maxWait="-1"/>
+</Context>
