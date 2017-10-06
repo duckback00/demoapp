@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <servlet-mapping>
+        <servlet-name>NewServlet</servlet-name>
+        <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            0 
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <resource-ref>
+        <description>Oracle DS</description>
+        <res-ref-name>jdbc/myoracle</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+    <resource-ref>
+        <description>MSSQL DS</description>
+        <res-ref-name>jdbc/mssql</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/ShowError.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/ShowError.jsp</location>
+    </error-page>
+    <servlet>
+        <servlet-name>DLPXEngineServlet</servlet-name>
+        <servlet-class>dlpx.DLPXEngineServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewServlet</servlet-name>
+        <servlet-class>dlpx.NewServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DLPXEngineServlet</servlet-name>
+        <url-pattern>/DLPXEngineServlet</url-pattern>
+    </servlet-mapping>
+</web-app>
